@@ -3,6 +3,7 @@ package models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Getter
@@ -34,10 +35,10 @@ public class Event {
     private Integer capacity;
 
     @Column(name="start_date", nullable = false)
-    private Locale startDate;
+    private LocalDateTime startDate;
 
     @Column(name="end_date", nullable = false)
-    private Integer endDate;
+    private LocalDateTime endDate;
 
     @Column(name="ticket_price", nullable = false)
     private Double ticketPrice;
