@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class EventDTO {
-    private Integer idEvent;
+    private Integer id;
     private String name;
     private String description;
     private String image;

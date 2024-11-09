@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class CauseDTO {
-private Integer idCause;
+private Integer id;
 private String name;
 private String description;
 private String image;
