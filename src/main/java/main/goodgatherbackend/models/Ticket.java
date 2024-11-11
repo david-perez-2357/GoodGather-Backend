@@ -1,4 +1,4 @@
-package models;
+package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,6 @@ import lombok.*;
 @Entity
 @Table(name="ticket", schema = "goodgather", catalog = "postgres")
 public class Ticket {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,6 +31,4 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_user", nullable = false)
     private User user;
-
-
 }
