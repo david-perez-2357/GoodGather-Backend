@@ -1,4 +1,4 @@
-package models;
+package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;

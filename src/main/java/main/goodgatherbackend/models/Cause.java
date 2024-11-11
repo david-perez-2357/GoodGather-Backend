@@ -1,6 +1,6 @@
-package models;
+package main.goodgatherbackend.models;
 
-import enumerated.Scope;
+import main.goodgatherbackend.enumerated.Scope;
 import jakarta.persistence.*;
 import lombok.*;
 
