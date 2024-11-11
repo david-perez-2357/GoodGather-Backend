@@ -1,7 +1,7 @@
 package main.goodgatherbackend.dtos;
 
-import enumerated.Scope;
 import lombok.Data;
+import main.goodgatherbackend.enumerated.Scope;
 
 @Data
 public class CauseDTO {
