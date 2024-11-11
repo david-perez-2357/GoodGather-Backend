@@ -29,6 +29,9 @@ public class Cause {
     @Column(name = "image", nullable = false)
     private String image;
 
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
+
 
     @Column(name = "scope", nullable = false)
     @Enumerated(EnumType.ORDINAL)

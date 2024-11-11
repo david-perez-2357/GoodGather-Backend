@@ -39,6 +39,15 @@ public class Event {
     @Column(name="end_date", nullable = false)
     private LocalDateTime endDate;
 
+    @Column(name="address", nullable = false)
+    private String address;
+
+    @Column(name="country", nullable = false)
+    private String country;
+
+    @Column(name="province", nullable = false)
+    private String province;
+
     @Column(name="ticket_price", nullable = false)
     private Double ticketPrice;
 
