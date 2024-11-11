@@ -1,6 +1,6 @@
-package repositories;
+package main.goodgatherbackend.repositories;
 
-import models.Cause;
+import main.goodgatherbackend.models.Cause;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

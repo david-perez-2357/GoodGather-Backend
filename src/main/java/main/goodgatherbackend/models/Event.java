@@ -1,4 +1,4 @@
-package models;
+package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,6 @@ import java.util.Locale;
 @Entity
 @Table(name="event", schema = "goodgather", catalog = "postgres")
 public class Event {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -52,8 +51,4 @@ public class Event {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_cause", nullable = false)
     private Cause cause;
-
-
-
-
 }

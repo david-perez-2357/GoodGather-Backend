@@ -1,6 +1,6 @@
-package models;
+package main.goodgatherbackend.models;
 
-import enumerated.Scope;
+import main.goodgatherbackend.enumerated.Scope;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,5 +37,4 @@ public class Cause {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_owner", nullable = false)
     private User idOwner;
-
 }

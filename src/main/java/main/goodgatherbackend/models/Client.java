@@ -1,4 +1,4 @@
-package models;
+package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "client", schema = "goodgather", catalog = "postgres")
 public class Client {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -39,6 +38,4 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_user", referencedColumnName ="id" )
     private User user;
-
-
 }
