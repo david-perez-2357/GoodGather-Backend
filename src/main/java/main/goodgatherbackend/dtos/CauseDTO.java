@@ -1,7 +1,6 @@
-package dtos;
+package main.goodgatherbackend.dtos;
 
 import enumerated.Scope;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Data;
 
 @Data

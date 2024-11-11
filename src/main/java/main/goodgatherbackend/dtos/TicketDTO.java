@@ -1,4 +1,4 @@
-package dtos;
+package main.goodgatherbackend.dtos;
 
 import lombok.Data;
 
