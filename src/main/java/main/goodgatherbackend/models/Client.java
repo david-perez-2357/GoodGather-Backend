@@ -21,10 +21,10 @@ public class Client {
     private Integer id;
 
     @Column(name = "firstname", nullable = false)
-    private String firstName;
+    private String firstname;
 
     @Column(name = "surname", nullable = false)
-    private String surName;
+    private String surname;
 
     @Column(name = "email", nullable = false)
     private String email;
