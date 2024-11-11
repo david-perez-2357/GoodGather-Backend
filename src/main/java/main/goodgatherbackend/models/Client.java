@@ -21,7 +21,7 @@ public class Client {
     private Integer id;
 
     @Column(name = "firstname", nullable = false)
-    private String FirstName;
+    private String firstName;
 
     @Column(name = "surname", nullable = false)
     private String surName;
@@ -34,6 +34,9 @@ public class Client {
 
     @Column(name = "country", nullable = false)
     private String country;
+
+    @Column(name = "province", nullable = false)
+    private String province;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_user", referencedColumnName ="id" )
