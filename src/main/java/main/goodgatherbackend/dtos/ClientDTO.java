@@ -11,6 +11,7 @@ public class ClientDTO {
     private String surname;
     private String email;
     private LocalDate birthdate;
+    private String province;
     private String country;
     private Integer idUser;
 }
