@@ -2,6 +2,9 @@ package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,6 +26,10 @@ public class Ticket {
 
     @Column(name="amount", nullable = false)
     private Integer amount;
+
+    @Column(name="purchase_date", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime purchaseDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_event", nullable = false)

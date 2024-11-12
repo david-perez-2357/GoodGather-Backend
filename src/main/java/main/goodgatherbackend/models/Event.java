@@ -2,6 +2,7 @@ package main.goodgatherbackend.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -50,6 +51,10 @@ public class Event {
 
     @Column(name="ticket_price", nullable = false)
     private Double ticketPrice;
+
+    @Column(name="created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @Column(name="deleted", nullable = false)
     private Boolean deleted;

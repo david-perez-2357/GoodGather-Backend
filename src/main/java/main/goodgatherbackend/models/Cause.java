@@ -3,6 +3,9 @@ package main.goodgatherbackend.models;
 import main.goodgatherbackend.enumerated.Scope;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,9 +32,12 @@ public class Cause {
     @Column(name = "image", nullable = false)
     private String image;
 
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
     @Column(name = "deleted", nullable = false)
     private Boolean deleted;
-
 
     @Column(name = "scope", nullable = false)
     @Enumerated(EnumType.ORDINAL)

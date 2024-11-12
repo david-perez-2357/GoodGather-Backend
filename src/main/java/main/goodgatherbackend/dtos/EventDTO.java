@@ -11,9 +11,13 @@ public class EventDTO {
     private String description;
     private String image;
     private Integer capacity;
+    private Integer boughtTickets;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Double ticketPrice;
+    private String address;
+    private String province;
+    private String country;
     private Boolean deleted;
     private Integer idOwner;
     private Integer idCause;
