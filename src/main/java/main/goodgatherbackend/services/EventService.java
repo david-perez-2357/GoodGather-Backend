@@ -19,4 +19,9 @@ public class EventService {
         List<Event> events = eventRepository.findAll();
         return eventMapper.toDTOList(events);
     }
+
+    public EventDTO getById(Integer id) {
+        Event event = eventRepository.findById(id).orElseThrow();
+        return eventMapper.toDTO(event);
+    }
 }
