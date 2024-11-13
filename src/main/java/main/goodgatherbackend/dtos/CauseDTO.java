@@ -11,4 +11,5 @@ public class CauseDTO {
     private String image;
     private Scope scope;
     private Integer idUser;
+    private String scope;
 }
