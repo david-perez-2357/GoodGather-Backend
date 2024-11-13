@@ -45,5 +45,5 @@ public class Cause {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_owner", nullable = false)
-    private User idOwner;
+    private User owner;
 }

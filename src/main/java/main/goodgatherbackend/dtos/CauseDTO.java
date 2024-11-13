@@ -9,6 +9,6 @@ public class CauseDTO {
     private String name;
     private String description;
     private String image;
-    private Scope scope;
-    private Integer idUser;
+    private String scope;
+    private Integer idOwner;
 }
