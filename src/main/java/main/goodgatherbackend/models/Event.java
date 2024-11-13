@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 
 @Getter
@@ -61,9 +62,13 @@ public class Event {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_owner", referencedColumnName ="id" )
-    private User user;
+    private User owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_cause", nullable = false)
     private Cause cause;
+
+    // Relations mapped by the Event class
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<Ticket> tickets;
 }
