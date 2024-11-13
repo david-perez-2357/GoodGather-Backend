@@ -6,6 +6,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,23 +46,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Valida que el usuario no esté autenticado previamente en el contexto de seguridad
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails;
+
+            try {
+                userDetails = this.userDetailsService.loadUserByUsername(username);
+                jwtService.validateToken(jwt, userDetails);
+            } catch (Exception e) {
+                filterChain.doFilter(request, response);
+                removeJwtFromCookies(response);
+                return;
+            }
 
             // Valida el token JWT con los detalles del usuario
-            if (jwtService.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities()
+            );
 
-                authenticationToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+            authenticationToken.setDetails(
+                    new WebAuthenticationDetailsSource().buildDetails(request)
+            );
 
-                // Establece la autenticación en el contexto de seguridad
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
+            // Establece la autenticación en el contexto de seguridad
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 
         // Continúa con el siguiente filtro en la cadena
@@ -78,5 +86,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         return null;
+    }
+
+    private void removeJwtFromCookies(HttpServletResponse response) {
+        Cookie jwtCookie = new Cookie("jwt", null);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(true);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(0); // Eliminar cookie
+
+        response.addCookie(jwtCookie);
     }
 }
