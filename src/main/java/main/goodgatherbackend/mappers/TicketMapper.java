@@ -24,10 +24,12 @@ public abstract class TicketMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "idEvent", source = "event.id")
     @Mapping(target = "idUser", source = "user.id")
+    @Mapping(target = "purchaseDate", source = "purchaseDate", dateFormat = "yyyy-MM-dd HH:mm")
     public abstract TicketDTO toDTO(Ticket ticket);
 
     @Mapping(target = "event", source = "idEvent", qualifiedByName = "idEvent")
     @Mapping(target = "user", source = "idUser", qualifiedByName = "idUser")
+    @Mapping(target = "purchaseDate", source = "purchaseDate", dateFormat = "yyyy-MM-dd HH:mm")
     public abstract Ticket toModel(TicketDTO ticketDTO);
 
     public abstract List<TicketDTO> toDTOList(List<Ticket> tickets);
