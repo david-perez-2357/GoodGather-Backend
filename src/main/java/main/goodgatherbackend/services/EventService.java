@@ -24,4 +24,10 @@ public class EventService {
         Event event = eventRepository.findById(id).orElseThrow();
         return eventMapper.toDTO(event);
     }
+
+    public EventDTO create(EventDTO eventDTO) {
+        Event event = eventMapper.toModel(eventDTO);
+        event = eventRepository.save(event);
+        return eventMapper.toDTO(event);
+    }
 }
