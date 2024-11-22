@@ -3,9 +3,9 @@ package main.goodgatherbackend.mappers;
 import main.goodgatherbackend.dtos.EventDTO;
 import main.goodgatherbackend.models.Cause;
 import main.goodgatherbackend.models.Event;
-import main.goodgatherbackend.models.Ticket;
 import main.goodgatherbackend.models.User;
 import main.goodgatherbackend.repositories.CauseRepository;
+import main.goodgatherbackend.repositories.TicketRepository;
 import main.goodgatherbackend.repositories.UserRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,9 +20,11 @@ public abstract class EventMapper {
     private UserRepository userRepository;
     @Autowired
     private CauseRepository causeRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "boughtTickets", source = "tickets", qualifiedByName = "boughtTickets")
+    @Mapping(target = "boughtTickets", source = "id", qualifiedByName = "boughtTickets")
     @Mapping(target = "startDate", source = "startDate", dateFormat = "yyyy-MM-dd HH:mm")
     @Mapping(target = "endDate", source = "endDate", dateFormat = "yyyy-MM-dd HH:mm")
     @Mapping(target = "idOwner", source = "owner.id")
@@ -41,8 +43,8 @@ public abstract class EventMapper {
     public abstract List<Event> toModelList(List<EventDTO> eventDTOs);
 
     @Named("boughtTickets")
-    public Integer boughtTickets(List<Ticket> tickets) {
-        return tickets.size();
+    public Integer boughtTickets(Integer eventId) {
+        return ticketRepository.sumAmountByEventId(eventId);
     }
 
     @Named("idOwner")
