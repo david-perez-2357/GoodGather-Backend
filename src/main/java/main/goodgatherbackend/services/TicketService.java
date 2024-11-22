@@ -24,10 +24,9 @@ public class TicketService {
         return ticketMapper.toDTOList(tickets);
     }
 
-    public List<TicketDTO> get24hBoughtTickets(Integer eventId) {
+    public Integer get24hBoughtTickets(Integer eventId) {
         Event event = eventRepository.findById(eventId).orElseThrow();
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        List<Ticket> tickets = ticketRepository.findAllByEventAndPurchaseDateIsAfter(event, yesterday);
-        return ticketMapper.toDTOList(tickets);
+        return ticketRepository.sumTicketsBoughtInLast24h(event.getId(), yesterday);
     }
 }
