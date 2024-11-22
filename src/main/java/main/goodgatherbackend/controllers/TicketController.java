@@ -22,7 +22,7 @@ public class TicketController {
     }
 
     @GetMapping("/byEvent/{eventId}/boughtInLast/24h")
-    public List<TicketDTO> get24hBoughtTickets(@PathVariable Integer eventId) {
+    public Integer get24hBoughtTickets(@PathVariable Integer eventId) {
         return ticketService.get24hBoughtTickets(eventId);
     }
 }
