@@ -34,4 +34,9 @@ public class TicketService {
         List<Ticket> tickets = ticketRepository.findByEventIdAndUserId(eventId, userId);
         return ticketMapper.toDTOList(tickets);
     }
+
+    public void saveTicket(TicketDTO ticketDTO) {
+        Ticket ticket = ticketMapper.toModel(ticketDTO);
+        ticketRepository.save(ticket);
+    }
 }

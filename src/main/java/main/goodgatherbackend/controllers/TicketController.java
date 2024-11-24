@@ -28,4 +28,8 @@ public class TicketController {
         return ticketService.getTicketsByEventAndUser(eventId, userId);
     }
 
+    @PostMapping()
+    public void create(@RequestBody TicketDTO ticketDTO) {
+        ticketService.saveTicket(ticketDTO);
+    }
 }
