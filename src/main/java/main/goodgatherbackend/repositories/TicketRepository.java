@@ -17,4 +17,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query("SELECT SUM(t.amount) FROM Ticket t WHERE t.event.id = :eventId")
     Integer sumAmountByEventId(Integer eventId);
+
+    List<Ticket> findByEventIdAndUserId(Integer eventId, Integer userId);
 }
