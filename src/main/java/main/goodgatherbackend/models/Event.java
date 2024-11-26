@@ -57,7 +57,7 @@ public class Event {
     private LocalDateTime createdAt;
 
     @Column(name="deleted", nullable = false)
-    private Boolean deleted;
+    private Integer deleted;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_owner", referencedColumnName ="id" )

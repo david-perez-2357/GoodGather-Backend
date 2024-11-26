@@ -18,8 +18,12 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping()
-    public List<EventDTO> getAll() {
-        return eventService.getAll();
+    public ResponseEntity<List<EventDTO>> getAll() {
+        try {
+            return ResponseEntity.ok(eventService.getAll());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/{id}")
