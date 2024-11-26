@@ -30,6 +30,10 @@ public class EventController {
 
     @PostMapping()
     public ResponseEntity<EventDTO> create(@RequestBody EventDTO eventDTO) {
-        return ResponseEntity.ok(eventService.create(eventDTO));
+        try{
+            return ResponseEntity.ok(eventService.create(eventDTO));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
