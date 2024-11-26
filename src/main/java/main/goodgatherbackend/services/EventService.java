@@ -16,7 +16,7 @@ public class EventService {
     private EventMapper eventMapper;
 
     public List<EventDTO> getAll() {
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findActiveEvents();
         return eventMapper.toDTOList(events);
     }
 
