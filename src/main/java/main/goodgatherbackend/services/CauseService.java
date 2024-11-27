@@ -19,4 +19,9 @@ public class CauseService {
         List<Cause> causes = causeRepository.findAll();
         return causeMapper.toDTOList(causes);
     }
+
+    public CauseDTO getById(Integer id) {
+        Cause cause = causeRepository.findById(id).orElseThrow();
+        return causeMapper.toDTO(cause);
+    }
 }

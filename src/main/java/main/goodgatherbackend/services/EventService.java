@@ -7,6 +7,7 @@ import main.goodgatherbackend.models.Event;
 import main.goodgatherbackend.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -16,7 +17,7 @@ public class EventService {
     private EventMapper eventMapper;
 
     public List<EventDTO> getAll() {
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findByDeletedAndEndDateAfter(0, LocalDateTime.now());
         return eventMapper.toDTOList(events);
     }
 

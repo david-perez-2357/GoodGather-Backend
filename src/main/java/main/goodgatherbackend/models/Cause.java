@@ -37,7 +37,7 @@ public class Cause {
     private LocalDateTime createdAt;
 
     @Column(name = "deleted", nullable = false)
-    private Boolean deleted;
+    private Integer deleted;
 
     @Column(name = "scope", nullable = false)
     @Enumerated(EnumType.ORDINAL)
