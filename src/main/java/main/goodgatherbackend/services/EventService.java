@@ -1,6 +1,5 @@
 package main.goodgatherbackend.services;
 
-import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import main.goodgatherbackend.dtos.EventDTO;
 import main.goodgatherbackend.mappers.EventMapper;
@@ -24,6 +23,12 @@ public class EventService {
 
     public EventDTO getById(Integer id) {
         Event event = eventRepository.findById(id).orElseThrow();
+        return eventMapper.toDTO(event);
+    }
+
+    public EventDTO create(EventDTO eventDTO) {
+        Event event = eventMapper.toModel(eventDTO);
+        event = eventRepository.save(event);
         return eventMapper.toDTO(event);
     }
 }

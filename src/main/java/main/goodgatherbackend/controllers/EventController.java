@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import main.goodgatherbackend.dtos.EventDTO;
 import main.goodgatherbackend.services.EventService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,15 @@ public class EventController {
             return ResponseEntity.ok(eventService.getById(id));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity<EventDTO> create(@RequestBody EventDTO eventDTO) {
+        try{
+            return ResponseEntity.ok(eventService.create(eventDTO));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

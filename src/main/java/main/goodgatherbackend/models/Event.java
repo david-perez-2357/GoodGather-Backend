@@ -54,7 +54,7 @@ public class Event {
 
     @Column(name="created_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name="deleted", nullable = false)
     private Integer deleted;
