@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -46,4 +47,7 @@ public class Cause {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_owner", nullable = false)
     private User owner;
+
+    @OneToMany(mappedBy = "cause", fetch = FetchType.LAZY)
+    private List<Event> events;
 }
