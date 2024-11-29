@@ -3,6 +3,10 @@ package main.goodgatherbackend.security.auth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import main.goodgatherbackend.dtos.UserClientDTO;
+import main.goodgatherbackend.services.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,20 +18,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    @Autowired
+    private ClientService clientService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(
-            @RequestBody RegisterRequest request
-    ) {
-        authenticationService.register(request);
-        return ResponseEntity.ok("Registro exitoso");
+    public ResponseEntity<String> createUser(@RequestBody UserClientDTO userClientDTO) {
+
+        try {
+            RegisterRequest registerRequest = new RegisterRequest();
+            registerRequest.setUsername(userClientDTO.getUsername());
+            registerRequest.setPassword(userClientDTO.getPassword());
+            authenticationService.register(registerRequest);
+
+            clientService.saveClient(userClientDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User and client created successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating user or client: " + e.getMessage());
+
+        }
+
+
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(
+    public ResponseEntity<AuthenticationRequest> authenticate(
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ) {
+
         String jwtToken = String.valueOf(authenticationService.authenticate(request).getToken());
         System.out.println(jwtToken);
 
@@ -41,7 +60,14 @@ public class AuthenticationController {
         // Agregar la cookie a la respuesta
         response.addCookie(jwtCookie);
 
-        return ResponseEntity.ok("Inicio de sesión exitoso");
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest();
+        authenticationRequest.setUsername(request.getUsername());
+        authenticationRequest.setPassword(request.getPassword());
+
+        return ResponseEntity.ok(authenticationRequest);
+
+
+
     }
 
 
