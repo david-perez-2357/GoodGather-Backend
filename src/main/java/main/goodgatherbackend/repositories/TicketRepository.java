@@ -19,4 +19,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     Integer sumAmountByEventId(Integer eventId);
 
     List<Ticket> findByEventIdAndUserId(Integer eventId, Integer userId);
+
+    List<Ticket> findByUserId(Integer userId);
 }
