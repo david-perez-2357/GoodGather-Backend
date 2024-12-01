@@ -10,7 +10,7 @@ import main.goodgatherbackend.models.User;
 import main.goodgatherbackend.repositories.ClientRepository;
 import main.goodgatherbackend.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -33,10 +33,15 @@ public class ClientService {
         return userClientMapper.toDTO(client);
     }
 
+    public void checkEmailExist(UserClientDTO userClientDTO){
+        if (clientRepository.findByEmail(userClientDTO.getEmail()).isPresent()) {
+            throw new IllegalStateException("Email already in use");
+        }
+    }
 
     public void saveClient(UserClientDTO userClientDTO) {
-        User user = userRepository.findByUsername(userClientDTO.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByUsername(userClientDTO.getUsername()).orElseThrow();
+
         Client client = userClientMapper.toClient(userClientDTO);
         client.setUser(user);
 
