@@ -35,7 +35,7 @@ public class ClientService {
 
     public void checkEmailExist(UserClientDTO userClientDTO){
         if (clientRepository.findByEmail(userClientDTO.getEmail()).isPresent()) {
-            throw new IllegalStateException("Email already in use");
+            throw new IllegalStateException("Email is already in use");
         }
     }
 
