@@ -1,6 +1,7 @@
 package main.goodgatherbackend.security.auth;
 
 import lombok.RequiredArgsConstructor;
+import main.goodgatherbackend.repositories.ClientRepository;
 import main.goodgatherbackend.security.config.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +24,7 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
+
 
         userRepository.save(user);
 
