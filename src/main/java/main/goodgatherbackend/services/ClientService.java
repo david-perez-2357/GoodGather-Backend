@@ -33,15 +33,15 @@ public class ClientService {
         return userClientMapper.toDTO(client);
     }
 
-    public void checkEmailExist(UserClientDTO userClientDTO){
-        if (clientRepository.findByEmail(userClientDTO.getEmail()).isPresent()) {
-            throw new IllegalStateException("Email is already in use");
+    public void checkUserExist(UserClientDTO userClientDTO){
+        if (userRepository.findByUsername(userClientDTO.getUsername()).isPresent()) {
+            throw new IllegalStateException("User name is already in use");
         }
     }
 
+
     public void saveClient(UserClientDTO userClientDTO) {
         User user = userRepository.findByUsername(userClientDTO.getUsername()).orElseThrow();
-
         Client client = userClientMapper.toClient(userClientDTO);
         client.setUser(user);
 

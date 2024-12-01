@@ -21,18 +21,19 @@ public class AuthenticationController {
     @Autowired
     private ClientService clientService;
 
+
     @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody UserClientDTO userClientDTO) {
 
         try {
-            clientService.checkEmailExist(userClientDTO);
+            clientService.checkUserExist(userClientDTO);
             RegisterRequest registerRequest = new RegisterRequest();
             registerRequest.setUsername(userClientDTO.getUsername());
             registerRequest.setPassword(userClientDTO.getPassword());
             authenticationService.register(registerRequest);
 
             clientService.saveClient(userClientDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User and client created successfully!");
+            return ResponseEntity.status(HttpStatus.CREATED).body("User and client were created successfully!");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating user or client: " + e.getMessage());
