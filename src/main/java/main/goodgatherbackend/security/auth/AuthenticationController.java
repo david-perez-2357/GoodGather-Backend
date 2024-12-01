@@ -25,6 +25,7 @@ public class AuthenticationController {
     public ResponseEntity<String> createUser(@RequestBody UserClientDTO userClientDTO) {
 
         try {
+            clientService.checkEmailExist(userClientDTO);
             RegisterRequest registerRequest = new RegisterRequest();
             registerRequest.setUsername(userClientDTO.getUsername());
             registerRequest.setPassword(userClientDTO.getPassword());
