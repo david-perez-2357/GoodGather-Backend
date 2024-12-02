@@ -15,9 +15,13 @@ import java.util.List;
 public class TicketController {
     private TicketService ticketService;
 
-    @GetMapping()
-    public List<TicketDTO> getAll() {
-        return ticketService.getAll();
+    @GetMapping("/byUser/{userId}")
+    public ResponseEntity<List<TicketDTO>> getTicketsByUser(@PathVariable Integer userId) {
+        try {
+            return ResponseEntity.ok(ticketService.getTicketsByUser(userId));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/byEvent/{eventId}/boughtInLast/24h")
