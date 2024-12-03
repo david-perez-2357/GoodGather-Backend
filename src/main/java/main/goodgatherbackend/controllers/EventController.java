@@ -23,6 +23,15 @@ public class EventController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<EventDTO>> getAllWithoutFilter() {
+        try {
+            return ResponseEntity.ok(eventService.getAllWithoutFilter());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EventDTO> getById(@PathVariable Integer id) {
         try {
