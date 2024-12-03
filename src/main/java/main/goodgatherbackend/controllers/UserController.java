@@ -23,4 +23,31 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/assisted-events")
+    private ResponseEntity<Integer> getUserNumAssistedEvents(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(userService.getUserNumAssistedEvents(id));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/upcoming-events")
+    private ResponseEntity<Integer> getUserNumUpcomingEvents(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(userService.getUserNumUpcomingEvents(id));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/created-events")
+    private ResponseEntity<Integer> getUserNumCreatedEvents(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(userService.getUserNumCreatedEvents(id));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

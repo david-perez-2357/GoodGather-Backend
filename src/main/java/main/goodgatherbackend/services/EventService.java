@@ -31,4 +31,13 @@ public class EventService {
         event = eventRepository.save(event);
         return eventMapper.toDTO(event);
     }
+
+    /**
+     * Returns whether an event has already happened
+     * @param event Event
+     * @return boolean
+     */
+    public boolean isEventPast(Event event) {
+        return event.getEndDate().isBefore(LocalDateTime.now());
+    }
 }
