@@ -2,11 +2,13 @@ package main.goodgatherbackend.repositories;
 
 import main.goodgatherbackend.models.Event;
 import main.goodgatherbackend.models.Ticket;
+import main.goodgatherbackend.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -21,4 +23,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> findByEventIdAndUserId(Integer eventId, Integer userId);
 
     List<Ticket> findByUserId(Integer userId);
+
+    List<Ticket> findAllByUser(User user);
 }
