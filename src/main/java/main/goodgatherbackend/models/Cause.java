@@ -13,9 +13,6 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-
-
 @Entity
 @Table(name="cause", schema ="goodgather", catalog = "postgres")
 public class Cause {
@@ -35,10 +32,10 @@ public class Cause {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "deleted", nullable = false)
-    private Integer deleted;
+    private Integer deleted = 0;
 
     @Column(name = "scope", nullable = false)
     @Enumerated(EnumType.ORDINAL)

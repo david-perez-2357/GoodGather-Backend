@@ -34,4 +34,15 @@ public class CauseService {
         System.out.println("Tickets: " + tickets.size());
         return tickets.stream().mapToDouble(Ticket::getPrice).sum();
     }
+
+    public List<CauseDTO> getCausesInUsersRange(Integer userId) {
+        List<Cause> causes = causeRepository.getCausesInUsersRange(userId);
+        return causeMapper.toDTOList(causes);
+    }
+
+    public CauseDTO createCause(CauseDTO causeDTO) {
+        Cause cause = causeMapper.toModel(causeDTO);
+        cause = causeRepository.save(cause);
+        return causeMapper.toDTO(cause);
+    }
 }
