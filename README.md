@@ -111,6 +111,7 @@ Before getting started, make sure you have the following installed:
   Creates a new ticket.
 
 ## 🗃️ Database
+The name of the database **must** be `goodgather` and the lenguage is `PostgreSQL`
 
 ```SQL
 DROP TABLE IF EXISTS ticket;
