@@ -32,7 +32,7 @@ Before getting started, make sure you have the following installed:
 
     - Add the following environment variables with their name and value:
 
-      | Variable de Entorno      | Descripción                                        |
+      | Enviroment variable      | Description                                        |
       |--------------------------|----------------------------------------------------|
       | JDBC_DATABASE_URL        | Url to acces the local database                    |
       | JDBC_DATABASE_USERNAME   | Username of the user to access the database        |
@@ -120,14 +120,14 @@ DROP TABLE IF EXISTS client;
 DROP TABLE IF EXISTS cause;
 DROP TABLE IF EXISTS appuser;
 
--- Tabla appuser
+-- Appuser table
 CREATE TABLE IF NOT EXISTS appuser (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
 
--- Tabla cause
+-- Cause table
 CREATE TABLE IF NOT EXISTS cause (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS cause (
     CONSTRAINT fk_cause_owner FOREIGN KEY (id_owner) REFERENCES appuser (id)
 );
 
--- Tabla client
+-- Client table
 CREATE TABLE IF NOT EXISTS client (
     id SERIAL PRIMARY KEY,
     firstname VARCHAR(50) NOT NULL,
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS client (
     CONSTRAINT fk_client_user FOREIGN KEY (id_user) REFERENCES appuser (id)
 );
 
--- Tabla event
+-- Event table
 CREATE TABLE IF NOT EXISTS event (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS event (
     CONSTRAINT fk_event_cause FOREIGN KEY (id_cause) REFERENCES cause (id)
 );
 
--- Tabla ticket
+-- Ticket table
 CREATE TABLE IF NOT EXISTS ticket (
     id SERIAL PRIMARY KEY,
     price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
