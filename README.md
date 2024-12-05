@@ -110,3 +110,84 @@ Before getting started, make sure you have the following installed:
 - **POST** `/ticket`  
   Creates a new ticket.
 
+## 🗃️ Database
+
+```SQL
+DROP TABLE IF EXISTS ticket;
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS cause;
+DROP TABLE IF EXISTS appuser;
+
+-- Tabla appuser
+CREATE TABLE IF NOT EXISTS appuser (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tabla cause
+CREATE TABLE IF NOT EXISTS cause (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    image VARCHAR(500) NOT NULL,
+    scope INT NOT NULL DEFAULT 0,
+    deleted INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_owner INT NOT NULL,
+    CONSTRAINT fk_cause_owner FOREIGN KEY (id_owner) REFERENCES appuser (id)
+);
+
+-- Tabla client
+CREATE TABLE IF NOT EXISTS client (
+    id SERIAL PRIMARY KEY,
+    firstname VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    birthdate DATE NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    province VARCHAR(50) NOT NULL,
+    id_user INT NOT NULL,
+    CONSTRAINT fk_client_user FOREIGN KEY (id_user) REFERENCES appuser (id)
+);
+
+-- Tabla event
+CREATE TABLE IF NOT EXISTS event (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    image VARCHAR(500) NOT NULL,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
+    capacity INT NOT NULL DEFAULT 100,
+    address VARCHAR(100) NOT NULL,
+    province VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    ticket_price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    deleted INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_owner INT NOT NULL,
+    id_cause INT NOT NULL,
+    CONSTRAINT fk_event_user FOREIGN KEY (id_owner) REFERENCES appuser (id),
+    CONSTRAINT fk_event_cause FOREIGN KEY (id_cause) REFERENCES cause (id)
+);
+
+-- Tabla ticket
+CREATE TABLE IF NOT EXISTS ticket (
+    id SERIAL PRIMARY KEY,
+    price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    amount INT NOT NULL DEFAULT 1,
+    purchase_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_event INT NOT NULL,
+    id_user INT NOT NULL,
+    CONSTRAINT fk_ticket_event FOREIGN KEY (id_event) REFERENCES event(id),
+    CONSTRAINT fk_ticket_user FOREIGN KEY (id_user) REFERENCES appuser (id)
+);
+```
+
+## 👷 Developers
+- [@MarioCastroRamirez](https://github.com/MarioCastroRamirez)
+- [@david-perez-2357](https://github.com/david-perez-2357)
+- [@jorgeariasmartin](https://github.com/jorgeariasmartin)
+- [@Pablo-R-B](https://github.com/Pablo-R-B)
