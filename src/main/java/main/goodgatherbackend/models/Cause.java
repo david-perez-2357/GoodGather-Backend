@@ -6,15 +6,13 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-
-
 @Entity
 @Table(name="cause", schema ="goodgather", catalog = "postgres")
 public class Cause {
@@ -34,10 +32,10 @@ public class Cause {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "deleted", nullable = false)
-    private Boolean deleted;
+    private Integer deleted = 0;
 
     @Column(name = "scope", nullable = false)
     @Enumerated(EnumType.ORDINAL)
@@ -46,4 +44,7 @@ public class Cause {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_owner", nullable = false)
     private User owner;
+
+    @OneToMany(mappedBy = "cause", fetch = FetchType.LAZY)
+    private List<Event> events;
 }

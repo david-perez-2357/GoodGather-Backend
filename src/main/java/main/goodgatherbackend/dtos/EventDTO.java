@@ -18,7 +18,7 @@ public class EventDTO {
     private String address;
     private String province;
     private String country;
-    private Boolean deleted;
+    private Integer deleted;
     private Integer idOwner;
     private Integer idCause;
 }
