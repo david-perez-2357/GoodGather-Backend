@@ -33,10 +33,8 @@ public class CauseService {
     }
 
     public Double getCauseFunds(Integer id) {
-        System.out.println("Getting funds for cause with id: " + id);
         Cause cause = causeRepository.findById(id).orElseThrow();
         List<Ticket> tickets = cause.getEvents().stream().map(Event::getTickets).flatMap(List::stream).toList();
-        System.out.println("Tickets: " + tickets.size());
         return tickets.stream().mapToDouble(Ticket::getPrice).sum();
     }
 
@@ -47,4 +45,15 @@ public class CauseService {
         return eventMapper.toDTOList(events);
     }
 
+
+    public List<CauseDTO> getCausesInUsersRange(Integer userId) {
+        List<Cause> causes = causeRepository.getCausesInUsersRange(userId);
+        return causeMapper.toDTOList(causes);
+    }
+
+    public CauseDTO createCause(CauseDTO causeDTO) {
+        Cause cause = causeMapper.toModel(causeDTO);
+        cause = causeRepository.save(cause);
+        return causeMapper.toDTO(cause);
+    }
 }
