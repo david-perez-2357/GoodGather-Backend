@@ -1,13 +1,12 @@
 package main.goodgatherbackend.security.auth;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import main.goodgatherbackend.dtos.UserClientDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -56,5 +55,14 @@ public class AuthenticationController {
         response.addCookie(jwtCookie);
 
         return ResponseEntity.ok("Logout exitoso");
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserClientDTO> getUser(HttpServletRequest response) {
+        String jwt = authenticationService.getJwtFromCookies(response);
+        if (jwt == null) {
+            return ResponseEntity.status(403).build();
+        }
+        return ResponseEntity.ok(authenticationService.getCurrentUser(jwt));
     }
 }
