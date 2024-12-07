@@ -24,6 +24,10 @@ public abstract class CauseMapper {
 
     @Mapping(target = "scope", source = "scope", qualifiedByName = "stringToScope")
     @Mapping(target = "owner", source = "idOwner", qualifiedByName = "idOwner")
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "events", ignore = true)
+    @Mapping(target = "id", source = "id")
     public abstract Cause toModel(CauseDTO causeDTO);
 
     public abstract List<CauseDTO> toDTOList(List<Cause> causes);
