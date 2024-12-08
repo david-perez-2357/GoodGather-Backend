@@ -33,6 +33,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
 
+
         userRepository.save(user);
 
         var token = jwtService.generateToken(user);
