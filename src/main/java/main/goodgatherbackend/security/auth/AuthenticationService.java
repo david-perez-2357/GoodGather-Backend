@@ -28,6 +28,14 @@ public class AuthenticationService {
     private final UserClientMapper userClientMapper;
     private final ClientRepository clientRepository;
 
+    /**@
+     * Recibe un RegisterRequest y construye una entidad User.
+     * Codifica la contraseña antes de guardarla en la base de datos.
+     * Genera un token JWT para el usuario recién registrado.
+     * @param request
+     * @return
+     */
+
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .username(request.getUsername())
@@ -40,6 +48,12 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(token).build();
     }
 
+    /**@
+     * Autentica al usuario usando AuthenticationManager.
+     * Genera y devuelve un token JWT.
+     * @param request
+     * @return
+     */
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -52,6 +66,11 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(token).build();
     }
 
+    /**@
+     * Extrae el token JWT de las cookies de una solicitud HTTP.
+     * @param request
+     * @return
+     */
     public String getJwtFromCookies(HttpServletRequest request) {
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
@@ -62,6 +81,13 @@ public class AuthenticationService {
         }
         return null;
     }
+
+    /**@
+     * Extrae el nombre de usuario del token JWT.
+     * Busca el usuario y su cliente asociado, y los convierte a un DTO.
+     * @param jwt
+     * @return
+     */
 
     public UserClientDTO getCurrentUser(String jwt) {
         String username = jwtService.extractUsername(jwt);

@@ -33,6 +33,14 @@ public class ClientService {
         return userClientMapper.toDTO(client);
     }
 
+    /**@
+     * Recibe un DTO (UserClientDTO) con la información del cliente.
+     * Busca al usuario relacionado en el repositorio userRepository por su username. Si no lo encuentra, lanza una excepción.
+     * Convierte el DTO a una entidad Client utilizando un mapper (userClientMapper).
+     * Establece la relación entre el usuario (User) y el cliente (Client).
+     * Guarda el cliente en el repositorio clientRepository.
+     * @param userClientDTO
+     */
 
     public void saveClient(UserClientDTO userClientDTO) {
         User user = userRepository.findByUsername(userClientDTO.getUsername()).orElseThrow();

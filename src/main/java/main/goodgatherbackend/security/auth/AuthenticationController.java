@@ -26,6 +26,13 @@ public class AuthenticationController {
     @Autowired
     private ClientRepository clientRepository;
 
+    /**@
+     * Crea un usuario con RegisterRequest.
+     * Llama a saveClient para registrar también al cliente asociado.
+     * @param userClientDTO
+     * @return
+     */
+
     @PostMapping("/register")
     public ResponseEntity<UserClientDTO> createUser(@RequestBody UserClientDTO userClientDTO) {
 
@@ -43,6 +50,13 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    /**2
+     * Autentica al usuario y devuelve un token JWT en una cookie HTTP-only para mayor seguridad
+     * @param request
+     * @param response
+     * @return
+     */
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationRequest> authenticate(
@@ -73,6 +87,11 @@ public class AuthenticationController {
 
     }
 
+    /**@
+     * Elimina la cookie del token JWT al establecer su duración en 0.
+     * @param response
+     * @return
+     */
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
@@ -87,6 +106,12 @@ public class AuthenticationController {
         return ResponseEntity.ok("Logout exitoso");
     }
 
+    /**@
+     * Devuelve el usuario actual utilizando el token JWT almacenado en las cookies.
+     * @param response
+     * @return
+     */
+
     @GetMapping("/user")
     public ResponseEntity<UserClientDTO> getUser(HttpServletRequest response) {
         String jwt = authenticationService.getJwtFromCookies(response);
@@ -96,10 +121,22 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getCurrentUser(jwt));
     }
 
+    /**@
+     * Verifican la existencia de un username en la base de datos.
+     * @param username
+     * @return
+     */
+
     @GetMapping("/ckeck-username-exists")
     public Boolean checkUsername (@RequestParam String username){
         return userRepository.existsByUsername(username);
     }
+
+    /**@
+     * Verifican la existencia de un email en la base de datos.
+     * @param email
+     * @return
+     */
 
     @GetMapping("/ckeck-email-exists")
     public Boolean checkEmail (@RequestParam String email){
