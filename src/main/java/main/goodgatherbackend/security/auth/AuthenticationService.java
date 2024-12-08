@@ -3,6 +3,7 @@ package main.goodgatherbackend.security.auth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import main.goodgatherbackend.repositories.ClientRepository;
 import main.goodgatherbackend.dtos.UserClientDTO;
 import main.goodgatherbackend.mappers.UserClientMapper;
 import main.goodgatherbackend.models.Client;
@@ -32,7 +33,6 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
-
 
         userRepository.save(user);
 

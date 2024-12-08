@@ -49,7 +49,6 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest request,
             HttpServletResponse response
     ) {
-
         String jwtToken = String.valueOf(authenticationService.authenticate(request).getToken());
         System.out.println(jwtToken);
 
@@ -67,7 +66,11 @@ public class AuthenticationController {
         authenticationRequest.setUsername(request.getUsername());
         authenticationRequest.setPassword(request.getPassword());
 
+
         return ResponseEntity.ok(authenticationRequest);
+
+
+
     }
 
 

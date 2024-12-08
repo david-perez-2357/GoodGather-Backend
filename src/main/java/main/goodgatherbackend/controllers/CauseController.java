@@ -2,6 +2,7 @@ package main.goodgatherbackend.controllers;
 
 import lombok.AllArgsConstructor;
 import main.goodgatherbackend.dtos.CauseDTO;
+import main.goodgatherbackend.dtos.EventDTO;
 import main.goodgatherbackend.services.CauseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,16 @@ public class CauseController {
         try {
             return ResponseEntity.ok(causeService.getCauseFunds(id));
 
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @GetMapping("/{id}/events")
+    public ResponseEntity<List<EventDTO>> getEventsFromCause(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(causeService.getEventsFromCause(id));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
