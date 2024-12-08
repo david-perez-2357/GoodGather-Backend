@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import main.goodgatherbackend.controllers.ClientController;
 import main.goodgatherbackend.dtos.UserClientDTO;
+import main.goodgatherbackend.repositories.ClientRepository;
 import main.goodgatherbackend.repositories.UserRepository;
 import main.goodgatherbackend.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class AuthenticationController {
     @Autowired
     private ClientService clientService;
     private ClientController clientController;
+    private final UserRepository userRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @PostMapping("/register")
     public ResponseEntity<UserClientDTO> createUser(@RequestBody UserClientDTO userClientDTO) {
@@ -88,4 +92,15 @@ public class AuthenticationController {
         }
         return ResponseEntity.ok(authenticationService.getCurrentUser(jwt));
     }
+
+    @GetMapping("/ckeck-username-exists")
+    public Boolean checkUsername (@RequestParam String username){
+        return userRepository.existsByUsername(username);
+    }
+
+    @GetMapping("/ckeck-email-exists")
+    public Boolean checkEmail (@RequestParam String email){
+        return clientRepository.existsClientsByEmail(email);
+    }
+
 }
