@@ -22,35 +22,62 @@ public class CauseService {
     private CauseMapper causeMapper;
     private EventMapper eventMapper;
 
+    /**
+     * Devuelve todas las causas
+     * @return List<CauseDTO>
+     */
     public List<CauseDTO> getAll() {
         List<Cause> causes = causeRepository.findAll();
         return causeMapper.toDTOList(causes);
     }
 
+    /**
+     * Devuelve una causa por su id
+     * @param id
+     * @return CauseDTO
+     */
     public CauseDTO getById(Integer id) {
         Cause cause = causeRepository.findById(id).orElseThrow();
         return causeMapper.toDTO(cause);
     }
 
+    /**
+     * Devuelve el total de fondos recaudados por una causa
+     * @param id
+     * @return Double
+     */
     public Double getCauseFunds(Integer id) {
         Cause cause = causeRepository.findById(id).orElseThrow();
         List<Ticket> tickets = cause.getEvents().stream().map(Event::getTickets).flatMap(List::stream).toList();
         return tickets.stream().mapToDouble(Ticket::getPrice).sum();
     }
 
-    // Quiero un metodo que coja todos los eventos de una causa utilizando el metodo del causeRepository
+    /**
+     * Devuelve todos los eventos de una causa
+     * @param id
+     * @return List<EventDTO>
+     */
     public List<EventDTO> getEventsFromCause(Integer id) {
         Cause cause = causeRepository.findById(id).orElseThrow();
         List<Event> events = eventRepository.findAllByCause(cause);
         return eventMapper.toDTOList(events);
     }
 
-
+    /**
+     * Devuelve todas las causas en el rango de un usuario
+     * @param userId
+     * @return List<CauseDTO>
+     */
     public List<CauseDTO> getCausesInUsersRange(Integer userId) {
         List<Cause> causes = causeRepository.getCausesInUsersRange(userId);
         return causeMapper.toDTOList(causes);
     }
 
+    /**
+     * Crea una causa
+     * @param causeDTO
+     * @return CauseDTO
+     */
     public CauseDTO createCause(CauseDTO causeDTO) {
         Cause cause = causeMapper.toModel(causeDTO);
         cause = causeRepository.save(cause);

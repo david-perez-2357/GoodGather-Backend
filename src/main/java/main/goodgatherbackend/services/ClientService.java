@@ -18,11 +18,20 @@ public class ClientService {
     private ClientMapper clientMapper;
     private UserClientMapper userClientMapper;
 
+    /**
+     * Devuelve todos los clientes
+     * @return List<ClientDTO>
+     */
     public List<ClientDTO> getAll() {
         List<Client> clients = clientRepository.findAll();
         return clientMapper.toDTOList(clients);
     }
 
+    /**
+     * Devuelve un cliente por su id
+     * @param idClient
+     * @return UserClientDTO
+     */
     public UserClientDTO findById(Integer idClient) {
         Client client = clientRepository.findById(idClient).orElse(null);
         return userClientMapper.toDTO(client);
