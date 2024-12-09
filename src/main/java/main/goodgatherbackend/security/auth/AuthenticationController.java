@@ -26,13 +26,14 @@ public class AuthenticationController {
     @Autowired
     private ClientRepository clientRepository;
 
-    /**@
-     * Crea un usuario con RegisterRequest.
-     * Llama a saveClient para registrar también al cliente asociado.
-     * @param userClientDTO
-     * @return
+    /**
+     * Registra un nuevo usuario y guarda la información del cliente.
+     * Este método toma los datos de un usuario y cliente proporcionados en el cuerpo de la solicitud,
+     * registra al usuario mediante el servicio de autenticación y guarda al cliente en la base de datos.
+     * Si ocurre un error durante el registro, se devuelve un estado de error interno.
+     * @param userClientDTO Objeto que contiene la información del usuario y del cliente.
+     * @return Respuesta HTTP con el objeto `UserClientDTO` registrado en caso de éxito, o un estado 500 en caso de error.
      */
-
     @PostMapping("/register")
     public ResponseEntity<UserClientDTO> createUser(@RequestBody UserClientDTO userClientDTO) {
 
@@ -51,13 +52,15 @@ public class AuthenticationController {
         }
     }
 
-    /**2
-     * Autentica al usuario y devuelve un token JWT en una cookie HTTP-only para mayor seguridad
-     * @param request
-     * @param response
-     * @return
+    /**
+     * Autentica a un usuario y genera un token JWT.
+     * Este método valida las credenciales del usuario, genera un token JWT y lo almacena
+     * como una cookie segura en la respuesta. Devuelve la solicitud de autenticación
+     * original en caso de éxito.
+     * @param request Objeto `AuthenticationRequest` con las credenciales del usuario.
+     * @param response Objeto `HttpServletResponse` para agregar la cookie con el token JWT.
+     * @return Respuesta HTTP con el objeto `AuthenticationRequest` en caso de éxito.
      */
-
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationRequest> authenticate(
             @RequestBody AuthenticationRequest request,
@@ -87,12 +90,12 @@ public class AuthenticationController {
 
     }
 
-    /**@
-     * Elimina la cookie del token JWT al establecer su duración en 0.
-     * @param response
-     * @return
+    /**
+     * Cierra la sesión del usuario.
+     * Este método elimina la cookie JWT de la respuesta para cerrar la sesión del usuario.
+     * @param response Objeto `HttpServletResponse` para eliminar la cookie JWT.
+     * @return Respuesta HTTP indicando que el cierre de sesión fue exitoso.
      */
-
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         Cookie jwtCookie = new Cookie("jwt", null);
@@ -106,12 +109,15 @@ public class AuthenticationController {
         return ResponseEntity.ok("Logout exitoso");
     }
 
-    /**@
-     * Devuelve el usuario actual utilizando el token JWT almacenado en las cookies.
-     * @param response
-     * @return
-     */
 
+    /**
+     * Obtiene la información del usuario actual.
+     * Este método recupera el token JWT de las cookies, valida su existencia y devuelve
+     * la información del usuario asociado al token. Si el token no está presente, devuelve
+     * un estado HTTP 403 (prohibido).
+     * @param response Objeto `HttpServletRequest` para obtener las cookies de la solicitud.
+     * @return Respuesta HTTP con el objeto `UserClientDTO` del usuario actual o estado 403 si no se encuentra el token.
+     */
     @GetMapping("/user")
     public ResponseEntity<UserClientDTO> getUser(HttpServletRequest response) {
         String jwt = authenticationService.getJwtFromCookies(response);
@@ -121,24 +127,22 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getCurrentUser(jwt));
     }
 
-    /**@
-     * Verifican la existencia de un username en la base de datos.
-     * @param username
-     * @return
+    /**
+     * Verifica si un nombre de usuario ya existe en la base de datos.
+     * @param username Nombre de usuario a verificar.
+     * @return `true` si el nombre de usuario ya existe, `false` en caso contrario.
      */
-
-    @GetMapping("/ckeck-username-exists")
+     @GetMapping("/ckeck-username-exists")
     public Boolean checkUsername (@RequestParam String username){
         return userRepository.existsByUsername(username);
     }
 
-    /**@
-     * Verifican la existencia de un email en la base de datos.
-     * @param email
-     * @return
+    /**
+     * Verifica si un correo electrónico ya existe en la base de datos.
+     * @param email Correo electrónico a verificar.
+     * @return `true` si el correo electrónico ya existe, `false` en caso contrario.
      */
-
-    @GetMapping("/ckeck-email-exists")
+      @GetMapping("/ckeck-email-exists")
     public Boolean checkEmail (@RequestParam String email){
         return clientRepository.existsClientsByEmail(email);
     }
