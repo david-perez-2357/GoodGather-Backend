@@ -9,5 +9,15 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer> {
+    /**
+     * findByEmail: busca un cliente por su email.
+     * existsClientsByEmail: verifica si ya existe un cliente con el email proporcionado.
+     * findByUser: busca un cliente asociado a un usuario específico.
+     * @param email
+     * @return
+     */
+    Optional<Client> findByEmail(String email);
+    boolean existsClientsByEmail(String email);
+
     Optional<Client> findByUser(User user);
 }

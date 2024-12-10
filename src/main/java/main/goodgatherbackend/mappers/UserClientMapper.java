@@ -18,6 +18,13 @@ public abstract class UserClientMapper {
     @Mapping(target = "idClient", source = "id")
     public abstract UserClientDTO toDTO(Client client);
 
+    /**
+     * Convierte un objeto UserClientDTO a una entidad Client.
+     * Mapea explícitamente idClient del DTO al campo id de la entidad.
+     * Ignora propiedades no mapeadas, como username y password.
+     * @param userClientDTO
+     * @return
+     */
     @Mapping(target = "id", source = "idClient")
     @BeanMapping(ignoreUnmappedSourceProperties = {"id", "username", "password"})
     public abstract Client toClient(UserClientDTO userClientDTO);
